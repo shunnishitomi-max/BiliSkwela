@@ -2,7 +2,7 @@
 
 School Supplies Inventory Management System using Laravel, React, Inertia, Fortify, and Spatie.
 
-## Phase 2: Categories and Suppliers
+## Phase 3: Products and Stock
 
 Complete cumulative checkpoint. Includes all earlier phases.
 

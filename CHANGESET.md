@@ -1,18 +1,20 @@
-# Phase 2 source changes - no code comments
+# Phase 3 source changes - no code comments
 
-Compared with the no-comments Phase 1 checkpoint.
+Compared with the no-comments Phase 2 checkpoint.
 
 ## ADDED
 
-- `app/Http/Controllers/CategoryController.php`
-- `app/Http/Controllers/SupplierController.php`
-- `resources/js/pages/Catalog.jsx`
-- `routes/categories.php`
-- `routes/suppliers.php`
+- `app/Http/Controllers/ProductController.php`
+- `app/Http/Controllers/StockMovementController.php`
+- `app/Services/InventoryService.php`
+- `resources/js/pages/Stock.jsx`
+- `routes/products.php`
+- `routes/stock.php`
 
 ## MODIFIED
 
 - `README.md`
+- `database/seeders/DemoSeeder.php`
 - `resources/js/Layouts/AppLayout.jsx`
 - `routes/web.php`
 
