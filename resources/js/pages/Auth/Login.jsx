@@ -44,13 +44,15 @@ export default function Login({ status }) {
                         />
                         Remember me
                     </label>
-                    
+                    <Link href="/forgot-password">Forgot password?</Link>
                 </div>
                 <button className="button full" disabled={f.processing}>
                     Sign in
                 </button>
             </form>
-            <p className="auth-links">Use the seeded Admin account for this checkpoint.</p>
+            <p className="auth-links">
+                New here? <Link href="/register">Create a Staff account</Link>
+            </p>
         </AuthLayout>
     );
 }

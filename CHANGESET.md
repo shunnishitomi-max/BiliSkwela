@@ -1,21 +1,26 @@
-# Phase 3 source changes - no code comments
+# Phase 4 source changes - no code comments
 
-Compared with the no-comments Phase 2 checkpoint.
+Compared with the no-comments Phase 3 checkpoint.
 
 ## ADDED
 
-- `app/Http/Controllers/ProductController.php`
-- `app/Http/Controllers/StockMovementController.php`
-- `app/Services/InventoryService.php`
-- `resources/js/pages/Stock.jsx`
-- `routes/products.php`
-- `routes/stock.php`
+- `app/Actions/Fortify/CreateNewUser.php`
+- `app/Actions/Fortify/PasswordValidationRules.php`
+- `app/Actions/Fortify/ResetUserPassword.php`
+- `app/Actions/Fortify/UpdateUserPassword.php`
+- `app/Actions/Fortify/UpdateUserProfileInformation.php`
+- `resources/js/pages/Auth/ForgotPassword.jsx`
+- `resources/js/pages/Auth/Register.jsx`
+- `resources/js/pages/Auth/ResetPassword.jsx`
+- `resources/js/pages/Settings.jsx`
 
 ## MODIFIED
 
 - `README.md`
-- `database/seeders/DemoSeeder.php`
+- `app/Providers/FortifyServiceProvider.php`
+- `config/fortify.php`
 - `resources/js/Layouts/AppLayout.jsx`
+- `resources/js/pages/Auth/Login.jsx`
 - `routes/web.php`
 
 ## REMOVED

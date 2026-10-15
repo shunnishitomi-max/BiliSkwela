@@ -1,6 +1,6 @@
-# Phase 3 - Products Stock
+# Phase 4 - Fortify Accounts
 
-Branch: phase-3-stock.
+Branch: phase-4-accounts.
 
 This is a complete cumulative checkpoint, not only loose module files. Source is in app/, routes/, database/, resources/, config/ and tests/. CHANGESET.md lists the exact difference from the prior checkpoint. All checkpoints share the same locked dependencies for predictable setup. Basic sign-in is included in Phase 1 to protect the application; Phase 4 completes the Fortify account pipeline. Phase 5 adds granular permissions and role administration.
 
@@ -13,7 +13,7 @@ This is a complete cumulative checkpoint, not only loose module files. Source is
 5. Install locked dependencies, apply pending migrations/role seeders and build the frontend as the README describes.
 6. Review git diff, test the new features, stage the intended source changes, commit, push your own branch and open a pull request.
 
-Do not upload every cumulative archive as a whole new source history. The archive is a reference for the checkpoint; the actual contribution is the change from the previous phase. Retain genuine member authorship. Suggested commit subject: feat(phase-3): implement products stock.
+Do not upload every cumulative archive as a whole new source history. The archive is a reference for the checkpoint; the actual contribution is the change from the previous phase. Retain genuine member authorship. Suggested commit subject: feat(phase-4): implement fortify accounts.
 
 For two submissions per member, Phase 6 includes final tests. For three submissions per member, use the separate Nine_Submission_Option instructions; its Phase 6 checkpoint defers the three verification contributions so they produce actual new diffs.
 
