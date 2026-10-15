@@ -22,6 +22,7 @@ class StockMovementController extends Controller
     public function store(Request $request, InventoryService $inventory)
     {
         $data = $request->validate(['product_id' => ['required', 'integer', 'exists:products,id'], 'type' => ['required', Rule::in(['IN', 'OUT'])], 'quantity' => ['required', 'integer', 'min:1', 'max:2147483647'], 'remarks' => ['nullable', 'string', 'max:255']]);
+        abort_unless($request->user()->can($data['type'] === 'IN' ? 'stock.in' : 'stock.out'), 403);
         $inventory->record($data, $request->user());
 
         return to_route('stock.index')->with('success', 'Stock movement recorded.');
