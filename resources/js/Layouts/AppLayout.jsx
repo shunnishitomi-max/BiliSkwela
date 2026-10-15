@@ -7,8 +7,10 @@ export default function AppLayout({ title, subtitle, children, action }) {
     const [open, setOpen] = useState(false);
     const nav = [
         ["/dashboard", "Overview", null, "◈"],
+        ["/products", "Products", "products.view", "▦"],
         ["/categories", "Categories", "categories.view", "◫"],
         ["/suppliers", "Suppliers", "suppliers.view", "◎"],
+        ["/stock", "Stock movements", "stock.view", "⇄"],
     ];
     const url = usePage().url.split("?")[0];
     return (
