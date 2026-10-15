@@ -11,6 +11,7 @@ export default function AppLayout({ title, subtitle, children, action }) {
         ["/categories", "Categories", "categories.view", "◫"],
         ["/suppliers", "Suppliers", "suppliers.view", "◎"],
         ["/stock", "Stock movements", "stock.view", "⇄"],
+        ["/settings", "My account", null, "⚙"],
     ];
     const url = usePage().url.split("?")[0];
     return (

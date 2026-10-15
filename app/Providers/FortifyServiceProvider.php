@@ -1,15 +1,31 @@
 <?php
+
 namespace App\Providers;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\RateLimiter;
+
+use App\Actions\Fortify\CreateNewUser;
+use App\Actions\Fortify\ResetUserPassword;
+use App\Actions\Fortify\UpdateUserPassword;
+use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Laravel\Fortify\Fortify;
-class FortifyServiceProvider extends ServiceProvider {
-    public function boot(): void {
-        Fortify::loginView(fn () => Inertia::render('Auth/Login', ['status'=>session('status')]));
-        RateLimiter::for('login', fn (Request $request) => Limit::perMinute(5)->by(Str::lower($request->input('email','')).'|'.$request->ip()));
+
+class FortifyServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        Fortify::createUsersUsing(CreateNewUser::class);
+        Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+        Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
+        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+        Fortify::loginView(fn () => Inertia::render('Auth/Login', ['status' => session('status')]));
+        Fortify::registerView(fn () => Inertia::render('Auth/Register'));
+        Fortify::requestPasswordResetLinkView(fn () => Inertia::render('Auth/ForgotPassword', ['status' => session('status')]));
+        Fortify::resetPasswordView(fn (Request $request) => Inertia::render('Auth/ResetPassword', ['token' => $request->route('token'), 'email' => $request->email]));
+        RateLimiter::for('login', fn (Request $request) => Limit::perMinute(5)->by(Str::lower($request->input('email', '')).'|'.$request->ip()));
     }
 }
