@@ -18,9 +18,12 @@ class DemoSeeder extends Seeder
             throw new \RuntimeException('DemoSeeder is limited to local/testing environments.');
         }
         $this->call(RolesAndPermissionsSeeder::class);
-        foreach (['Admin', 'Manager', 'Staff'] as $role) {
+        foreach (['Admin' => 'Shop Administrator', 'Manager' => 'Inventory Manager', 'Staff' => 'Sales Staff'] as $role => $name) {
             $email = strtolower($role).'@biliskwela.test';
-            $user = User::firstOrCreate(['email' => $email], ['name' => 'Demo '.$role, 'password' => Hash::make('DemoPass123!')]);
+            $user = User::firstOrCreate(['email' => $email], ['name' => $name, 'password' => Hash::make('DemoPass123!')]);
+            if ($user->name === 'Demo '.$role) {
+                $user->update(['name' => $name]);
+            }
             if ($user->wasRecentlyCreated) {
                 $user->assignRole($role);
             }

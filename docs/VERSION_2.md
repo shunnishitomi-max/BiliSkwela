@@ -12,6 +12,8 @@ Local comparison: Version 1 uses http://127.0.0.1:8006 and Version 2 uses http:/
 
 ## Sample shop data
 
+Interface wording uses shop terminology, including User access, Search staff, and Create staff account. The footer shows stock-record context, and the browser tab uses a BiliSkwela icon. Starter account display names are Shop Administrator, Inventory Manager, and Sales Staff; existing custom names and login credentials are preserved. Sample-data documentation remains available for installation and classroom use.
+
 Run `php artisan db:seed --class=RealisticDemoSeeder` to add 32 products and five fictional suppliers to the eight-product starter demonstration. It records opening stock, selected replenishment deliveries, and eight stock-out batches per new product over three weeks. Prices and supplier details are fictional examples for classroom use. Product quantities are calculated through InventoryService and its transaction ledger. Existing data is preserved and repeated runs skip already-present products.
 
 ## Familiar Philippine retail brands

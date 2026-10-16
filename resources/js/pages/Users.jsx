@@ -47,7 +47,7 @@ export default function Users({ users, filters = {} }) {
     const f = useForm({ search: filters.search || "" });
     return (
         <AppLayout
-            title="Team access"
+            title="User access"
             subtitle="Manage staff roles and access to shop records."
         >
             <section className="card">
@@ -62,7 +62,7 @@ export default function Users({ users, filters = {} }) {
                     }}
                 >
                     <Field
-                        label="Find a teammate"
+                        label="Search staff"
                         name="search"
                         value={f.data.search}
                         onChange={(e) => f.setData("search", e.target.value)}

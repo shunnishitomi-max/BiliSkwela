@@ -13,16 +13,16 @@ export default function AuthLayout({ title, children }) {
                 </span>
                 <div className="auth-shop-sign">
                     <span className="shop-sign-label">
-                        ANG GAMIT SA ESKWELA
+                        SCHOOL SUPPLIES STORE
                     </span>
                     <h1>
-                        Bili na.
+                        Inventory
                         <br />
-                        May pasok pa.
+                        and stock records.
                     </h1>
                     <p>
-                        Notebooks, paper, pens, and the everyday things students
-                        need.
+                        Manage products, record deliveries, and track supplies
+                        issued from the shop.
                     </p>
                     <div className="shop-lines">
                         <span>NOTEBOOKS</span>

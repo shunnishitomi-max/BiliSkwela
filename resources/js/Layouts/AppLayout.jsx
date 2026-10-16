@@ -51,7 +51,7 @@ export default function AppLayout({ title, subtitle, children, action }) {
         <div className="app">
             <Head title={title} />
             <aside
-                id="workspace-navigation"
+                id="shop-navigation"
                 className={`sidebar ${open ? "open" : ""}`}
             >
                 <Link href="/dashboard" className="brand">
@@ -95,7 +95,7 @@ export default function AppLayout({ title, subtitle, children, action }) {
                         className="signout"
                         onClick={() => router.post("/logout")}
                     >
-                        Sign out <span aria-hidden="true">↗</span>
+                        Sign out <span aria-hidden="true">â†—</span>
                     </button>
                 </div>
             </aside>
@@ -112,10 +112,10 @@ export default function AppLayout({ title, subtitle, children, action }) {
                         className="menu-button"
                         aria-label="Open navigation"
                         aria-expanded={open}
-                        aria-controls="workspace-navigation"
+                        aria-controls="shop-navigation"
                         onClick={() => setOpen(!open)}
                     >
-                        ☰
+                        â˜°
                     </button>
                     <span className="breadcrumb">
                         BiliSkwela <span>/</span> Inventory
@@ -143,8 +143,8 @@ export default function AppLayout({ title, subtitle, children, action }) {
                 <Errors errors={errors} />
                 {children}
                 <footer className="main-footer">
-                    <span>BiliSkwela · School supplies inventory</span>
-                    <span>Version 2</span>
+                    <span>BiliSkwela Â· School supplies inventory</span>
+                    <span>Stock records</span>
                 </footer>
             </main>
         </div>
