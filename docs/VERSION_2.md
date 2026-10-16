@@ -4,7 +4,7 @@ This alternative interface uses Version 1's green-and-white palette with Version
 
 The Laravel, Fortify, Spatie, inventory validation, and reporting behavior are unchanged. No code comments have been added. The source is a separate copy of the integrated Phase 6 version 1 checkpoint.
 
-Verification on 16 October 2026: production Vite build passed; 26 automated tests passed with 255 assertions using an isolated SQLite database. Tests cover repeatable sample data, preservation of existing stock, ledger balance consistency, and chronological stock displays. The dashboard, products, and reports screens are checked in Microsoft Edge. Automated tests do not establish production database concurrency or SMTP delivery.
+Verification on 16 October 2026: production Vite build passed; 26 automated tests passed with 258 assertions using an isolated SQLite database. Tests cover repeatable sample data, preservation of existing stock and custom product names, ledger balance consistency, and chronological stock displays. The dashboard, products, and reports screens are checked in Microsoft Edge. Automated tests do not establish production database concurrency or SMTP delivery.
 
 For a fresh installation, follow README.md and generate your own application key. The source archive excludes local credentials, the desktop demonstration database, dependencies, and generated build files.
 
@@ -13,6 +13,14 @@ Local comparison: Version 1 uses http://127.0.0.1:8006 and Version 2 uses http:/
 ## Sample shop data
 
 Run `php artisan db:seed --class=RealisticDemoSeeder` to add 32 products and five fictional suppliers to the eight-product starter demonstration. It records opening stock, selected replenishment deliveries, and eight stock-out batches per new product over three weeks. Prices and supplier details are fictional examples for classroom use. Product quantities are calculated through InventoryService and its transaction ledger. Existing data is preserved and repeated runs skip already-present products.
+
+## Familiar Philippine retail brands
+
+Sample products use familiar retail brands including HBW, Pilot, Mongol, Faber-Castell, Dong-A, Cattleya, Veco, Orions, Advance, Crayola, Maped, MAX, Scotch, STABILO, and Elmer's. Some project materials and accessories remain unbranded. Suppliers remain fictional examples and do not imply authorized brand distribution. Prices are illustrative shop data, not current retail quotations.
+
+RealisticDemoSeeder includes the brand-name update. For an already-populated demonstration, run `php artisan db:seed --class=PhilippineBrandsSeeder`. This updates only known sample SKUs that still have their original generic names. Custom names, quantities, prices, supplier assignments, and stock history are preserved.
+
+Reference examples: [National Book Store brand listings](https://nationalbookstore.com/pages/brands), [Office Warehouse Dong-A products](https://www.officewarehouse.com.ph/brands/dong-a/), and [Office Warehouse copy paper](https://www.officewarehouse.com.ph/brands/office-warehouse/). These references establish local retail examples, not sales rankings.
 
 ## Color palette
 

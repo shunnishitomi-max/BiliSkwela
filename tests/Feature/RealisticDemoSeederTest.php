@@ -32,6 +32,9 @@ class RealisticDemoSeederTest extends InventoryTestCase
         $this->seed(RealisticDemoSeeder::class);
         $this->assertDatabaseCount('products', 41);
         $this->assertSame(17, $existing->fresh()->quantity);
+        $this->assertDatabaseHas('products', ['sku' => 'BS-002', 'name' => 'Mongol Pencil No. 2']);
+        $this->assertDatabaseHas('products', ['sku' => 'BKS-0103', 'name' => 'Dong-A My Gel Pen Blue 0.5mm']);
+        Product::where('sku', 'BKS-0103')->update(['name' => 'Custom Gel Pen']);
         $quantities = Product::orderBy('id')->pluck('quantity', 'id')->all();
         $movements = StockMovement::count();
         $balances = StockMovement::all()->groupBy('product_id')->map(fn ($rows) => $rows->sum(fn ($row) => $row->type === 'IN' ? $row->quantity : -$row->quantity))->sortKeys()->all();
@@ -40,5 +43,6 @@ class RealisticDemoSeederTest extends InventoryTestCase
         $this->seed(RealisticDemoSeeder::class);
         $this->assertSame($movements, StockMovement::count());
         $this->assertSame($quantities, Product::orderBy('id')->pluck('quantity', 'id')->all());
+        $this->assertDatabaseHas('products', ['sku' => 'BKS-0103', 'name' => 'Custom Gel Pen']);
     }
 }

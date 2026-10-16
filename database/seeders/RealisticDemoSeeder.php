@@ -20,6 +20,7 @@ class RealisticDemoSeeder extends Seeder
         }
 
         $this->call(DemoSeeder::class);
+        $this->call(PhilippineBrandsSeeder::class);
         $anchor = now()->startOfDay();
         $actors = User::whereIn('email', ['admin@biliskwela.test', 'manager@biliskwela.test', 'staff@biliskwela.test'])->get()->keyBy('email');
         $suppliers = [
@@ -71,11 +72,13 @@ class RealisticDemoSeeder extends Seeder
             }
 
             foreach ($catalog as $index => [$group, $name, $price, $minimum, $supplier, $remaining]) {
+                $sku = 'BKS-'.str_pad((string) ($index + 101), 4, '0', STR_PAD_LEFT);
+                $name = PhilippineBrandsSeeder::PRODUCTS[$sku][1] ?? $name;
                 if (Product::where('name', $name)->exists()) {
                     continue;
                 }
                 $category = Category::firstOrCreate(['name' => $group], ['description' => $group.' stocked for classroom and school project needs.']);
-                $product = Product::firstOrCreate(['sku' => 'BKS-'.str_pad((string) ($index + 101), 4, '0', STR_PAD_LEFT)], ['name' => $name, 'category_id' => $category->id, 'supplier_id' => $supplierIds[$supplier], 'price' => $price, 'minimum_stock' => $minimum]);
+                $product = Product::firstOrCreate(['sku' => $sku], ['name' => $name, 'category_id' => $category->id, 'supplier_id' => $supplierIds[$supplier], 'price' => $price, 'minimum_stock' => $minimum]);
                 if (! $product->wasRecentlyCreated) {
                     continue;
                 }
