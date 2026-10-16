@@ -1,6 +1,6 @@
 # BiliSkwela Version 2
 
-This alternative interface uses an olive sidebar, cream background, olive actions, and ochre/beige accents, and compact inventory tables. The dashboard starts with balances, low-stock items, and recent ledger entries. Promotional banners and decorative symbols are removed. Navigation uses consistent line icons, and screen descriptions use direct shop terminology.
+This alternative interface uses a deep navy sidebar, warm cream background, and blue actions and accents, and compact inventory tables. The dashboard starts with balances, low-stock items, and recent ledger entries. Promotional banners and decorative symbols are removed. Navigation uses consistent line icons, and screen descriptions use direct shop terminology.
 
 The Laravel, Fortify, Spatie, inventory validation, and reporting behavior are unchanged. No code comments have been added. The source is a separate copy of the integrated Phase 6 version 1 checkpoint.
 
@@ -12,11 +12,11 @@ Local comparison: Version 1 uses http://127.0.0.1:8006 and Version 2 uses http:/
 
 ## Color palette
 
-Source: https://colorhunt.co/palette/f5efe34f5b2ab8892dd8c9a8
+Source: https://colorhunt.co/palette/0107360d1c4222396ffcf1d0
 
-- Cream: `#F5EFE3` — page background and light text.
-- Olive: `#4F5B2A` — navigation, headings, links, and primary actions.
-- Ochre: `#B8892D` — focus rings, active accents, and restock borders.
-- Beige: `#D8C9A8` — logo background, borders, and supporting surfaces.
+- Deep navy: `#010736` - sidebar and authentication panel.
+- Midnight blue: `#0D1C42` - headings and primary text.
+- Blue: `#22396F` - buttons, links, focus indicators, and accents.
+- Cream: `#FCF1D0` - page background, logo, and navigation highlights.
 
-Lighter and darker supporting shades preserve contrast. Error messages retain a red semantic color and explicit text.
+Supporting neutral shades keep tables and form controls readable. Errors retain explicit labels and red semantic styling.
