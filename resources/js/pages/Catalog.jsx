@@ -344,8 +344,8 @@ export default function Catalog(props) {
             title={title}
             subtitle={
                 mode === "index"
-                    ? `Manage your ${d.title.toLowerCase()} with confidence.`
-                    : "Keep every detail accounted for."
+                    ? `View and update ${d.title.toLowerCase()} in the shop records.`
+                    : "Enter the record details below."
             }
             action={
                 mode === "index" && can(`${resource}.create`) ? (

@@ -26,7 +26,7 @@ export default function Reports({
     return (
         <AppLayout
             title="Reports"
-            subtitle="An honest snapshot of your shelves and stock activity."
+            subtitle="Inventory balances and stock transactions for your records."
             action={
                 <button
                     className="button no-print"

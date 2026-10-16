@@ -59,14 +59,14 @@ export function Pagination({ links = [] }) {
                         preserveScroll
                     >
                         {link.label
-                            .replace(/&laquo;/g, "«")
-                            .replace(/&raquo;/g, "»")}
+                            .replace(/&laquo;/g, "Â«")
+                            .replace(/&raquo;/g, "Â»")}
                     </Link>
                 ) : (
                     <span key={i} className="page disabled">
                         {link.label
-                            .replace(/&laquo;/g, "«")
-                            .replace(/&raquo;/g, "»")}
+                            .replace(/&laquo;/g, "Â«")
+                            .replace(/&raquo;/g, "Â»")}
                     </span>
                 ),
             )}
@@ -99,7 +99,6 @@ export const date = (value) =>
 export function Empty({ text = "No records yet." }) {
     return (
         <div className="empty">
-            <span>✦</span>
             <p>{text}</p>
         </div>
     );

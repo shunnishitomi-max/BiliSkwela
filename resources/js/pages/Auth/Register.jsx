@@ -9,7 +9,7 @@ export default function Register() {
         password_confirmation: "",
     });
     return (
-        <AuthLayout title="Join the workspace">
+        <AuthLayout title="Create staff account">
             <p className="subtitle">New accounts receive Staff access.</p>
             <form
                 onSubmit={(e) => {

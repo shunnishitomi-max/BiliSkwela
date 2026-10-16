@@ -14,7 +14,7 @@ class StockMovementController extends Controller
     public function index(Request $request)
     {
         $filters = $request->validate(['product_id' => ['nullable', 'integer', 'exists:products,id'], 'type' => ['nullable', Rule::in(['IN', 'OUT'])], 'page' => ['nullable', 'integer', 'min:1']]);
-        $movements = StockMovement::with(['product', 'user'])->when($filters['product_id'] ?? null, fn ($q, $id) => $q->where('product_id', $id))->when($filters['type'] ?? null, fn ($q, $v) => $q->where('type', $v))->latest('id')->paginate(10)->withQueryString();
+        $movements = StockMovement::with(['product', 'user'])->when($filters['product_id'] ?? null, fn ($q, $id) => $q->where('product_id', $id))->when($filters['type'] ?? null, fn ($q, $v) => $q->where('type', $v))->latest()->latest('id')->paginate(10)->withQueryString();
 
         return Inertia::render('Stock', ['movements' => $movements, 'products' => Product::orderBy('name')->get(['id', 'name', 'sku', 'quantity']), 'filters' => $filters]);
     }

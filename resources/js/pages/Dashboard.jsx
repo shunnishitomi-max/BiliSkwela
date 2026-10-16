@@ -1,57 +1,73 @@
 import { Link } from "@inertiajs/react";
 import AppLayout from "../Layouts/AppLayout";
 import { useCan, StockBadge, Empty, date } from "../components/UI";
+
 export default function Dashboard({ stats, lowStock, recent }) {
     const can = useCan();
     return (
         <AppLayout
-            title="A good day to get stocked."
-            subtitle="Your school essentials, all accounted for."
+            title="Stock overview"
+            subtitle="Current inventory and the latest entries in your stock ledger."
             action={
                 can("stock.in") && (
                     <Link className="button" href="/stock">
-                        + Receive stock
+                        Record stock entry <span aria-hidden="true">+</span>
                     </Link>
                 )
             }
         >
-            <section className="hero">
-                <div>
-                    <span className="badge cream">EVERYDAY ESSENTIALS</span>
-                    <h2>
-                        Small supplies.
-                        <br />
-                        Big possibilities.
-                    </h2>
-                    <p>Keep the shelves ready for the next bright idea.</p>
-                </div>
-                <div className="hero-art" aria-hidden="true">
-                    <span className="notebook">
-                        B<span>READY TO LEARN</span>
-                    </span>
-                    <span className="pencil">✎</span>
-                    <span className="spark">✦</span>
-                </div>
-            </section>
             <div className="stats">
                 {[
-                    ["Products", stats.products, "Catalog essentials"],
-                    ["Units on hand", stats.units, "Available inventory"],
-                    ["Needs restocking", stats.low, "At or below minimum"],
-                    ["Suppliers", stats.suppliers, "Supply partners"],
-                ].map(([label, n, sub]) => (
-                    <div className="stat" key={label}>
+                    [
+                        "Products",
+                        stats.products,
+                        `${stats.categories} categories`,
+                    ],
+                    ["Units on hand", stats.units, "Across all products"],
+                    ["Low-stock items", stats.low, "At or below minimum"],
+                    ["Suppliers", stats.suppliers, "Registered suppliers"],
+                ].map(([label, value, detail], index) => (
+                    <div
+                        className={`stat ${index === 2 && stats.low ? "stat-alert" : ""}`}
+                        key={label}
+                    >
                         <p>{label}</p>
-                        <strong>{n}</strong>
-                        <small>{sub}</small>
+                        <strong>
+                            {new Intl.NumberFormat("en-PH").format(value)}
+                        </strong>
+                        <small>{detail}</small>
                     </div>
                 ))}
             </div>
+            {stats.low > 0 && (
+                <div className="restock-note">
+                    <span className="note-mark" aria-hidden="true">
+                        !
+                    </span>
+                    <p>
+                        <strong>
+                            {stats.low}{" "}
+                            {stats.low === 1
+                                ? "product needs"
+                                : "products need"}{" "}
+                            restocking.
+                        </strong>{" "}
+                        Check quantities before placing your next supplier
+                        order.
+                    </p>
+                    <Link href="/products?stock=low">Review items →</Link>
+                </div>
+            )}
             <div className="dashboard-grid">
-                <section className="card">
+                <section className="card restock-card">
                     <div className="section-heading">
-                        <h2>Restock radar</h2>
-                        <span className="badge warning">{stats.low} low</span>
+                        <div>
+                            <h2>Restock list</h2>
+                            <p className="hint">
+                                Lowest quantities first · showing up to 8 items
+                            </p>
+                        </div>
+                        <Link href="/products?stock=low">View list →</Link>
                     </div>
                     {lowStock.length ? (
                         <div className="table-wrap">
@@ -60,26 +76,32 @@ export default function Dashboard({ stats, lowStock, recent }) {
                                     <tr>
                                         <th>Product</th>
                                         <th>On hand</th>
+                                        <th>Minimum</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {lowStock.map((x) => (
-                                        <tr key={x.id}>
+                                    {lowStock.map((product) => (
+                                        <tr key={product.id}>
                                             <td>
                                                 <Link
-                                                    href={`/products/${x.id}`}
+                                                    className="record-name"
+                                                    href={`/products/${product.id}`}
                                                 >
-                                                    {x.name}
+                                                    {product.name}
                                                 </Link>
-                                                <small>{x.category.name}</small>
+                                                <small>
+                                                    {product.category.name}
+                                                </small>
+                                            </td>
+                                            <td className="quantity-cell">
+                                                {product.quantity}
+                                            </td>
+                                            <td className="minimum-cell">
+                                                {product.minimum_stock}
                                             </td>
                                             <td>
-                                                {x.quantity} / min{" "}
-                                                {x.minimum_stock}
-                                            </td>
-                                            <td>
-                                                <StockBadge product={x} />
+                                                <StockBadge product={product} />
                                             </td>
                                         </tr>
                                     ))}
@@ -87,40 +109,64 @@ export default function Dashboard({ stats, lowStock, recent }) {
                             </table>
                         </div>
                     ) : (
-                        <Empty text="All essentials are stocked." />
+                        <Empty text="No products are below their minimum stock level." />
+                    )}
+                    {can("stock.in") && (
+                        <div className="card-bottom">
+                            <Link href="/stock">Record a delivery →</Link>
+                            <span>Stock levels update after each entry.</span>
+                        </div>
                     )}
                 </section>
                 <section className="card">
                     <div className="section-heading">
-                        <h2>Recent activity</h2>
-                        <Link href="/stock">View all →</Link>
+                        <div>
+                            <h2>Latest stock entries</h2>
+                            <p className="hint">Most recent transactions</p>
+                        </div>
+                        <Link href="/stock">Ledger →</Link>
                     </div>
                     {recent.length ? (
                         <div className="activity">
-                            {recent.map((x) => (
-                                <div className="activity-row" key={x.id}>
+                            {recent.map((entry) => (
+                                <div className="activity-row" key={entry.id}>
                                     <span
-                                        className={`movement-icon ${x.type === "IN" ? "positive" : "negative"}`}
+                                        className={`movement-icon ${entry.type === "IN" ? "positive" : "negative"}`}
                                     >
-                                        {x.type === "IN" ? "↗" : "↘"}
+                                        {entry.type === "IN" ? "IN" : "OUT"}
                                     </span>
                                     <div>
-                                        <strong>{x.product.name}</strong>
+                                        <strong>{entry.product.name}</strong>
                                         <small>
-                                            {x.user.name} · {date(x.created_at)}
+                                            {entry.user.name} ·{" "}
+                                            {date(entry.created_at)}
                                         </small>
                                     </div>
-                                    <b>
-                                        {x.type === "IN" ? "+" : "-"}
-                                        {x.quantity}
+                                    <b
+                                        className={
+                                            entry.type === "IN"
+                                                ? "amount-in"
+                                                : "amount-out"
+                                        }
+                                    >
+                                        {entry.type === "IN" ? "+" : "−"}
+                                        {entry.quantity}
                                     </b>
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <Empty text="Stock activity will appear here." />
+                        <Empty text="No stock entries yet." />
                     )}
                 </section>
+            </div>
+            <div className="overview-links">
+                <span>Need a printed copy?</span>
+                {can("reports.view") ? (
+                    <Link href="/reports">Open inventory reports →</Link>
+                ) : (
+                    <span>Ask an Admin or Manager for inventory reports.</span>
+                )}
             </div>
         </AppLayout>
     );

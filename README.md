@@ -1,4 +1,4 @@
-# BiliSkwela — Version 1
+# BiliSkwela â€” Version 2
 
 School Supplies Inventory Management System for INTECH 3112.
 
@@ -47,6 +47,10 @@ php artisan db:seed --class=DemoSeeder
 SQLite validates the local workflow. Use MySQL for verification of concurrent row locking; SQLite does not implement MySQL's `SELECT ... FOR UPDATE` semantics.
 
 ## Demo accounts (local/testing only)
+
+The fuller demo uses familiar brands available in Philippine shops. To update an existing generic sample catalog without changing quantities, prices, or stock history, run `php artisan db:seed --class=PhilippineBrandsSeeder`. Only unchanged generic names on known sample SKUs are renamed; custom product names are preserved. RealisticDemoSeeder runs this step automatically.
+
+For a fuller school-supply shop demonstration, run `php artisan db:seed --class=RealisticDemoSeeder` after installation. This adds 32 products, five fictional suppliers, and three weeks of sample deliveries and stock-out entries. Sample prices are in PHP and are illustrative. Existing products, stock balances, and accounts are preserved; repeat runs skip products already present. Supplier email addresses use reserved `.test` domains. The sample data is restricted to local/testing environments.
 
 | Role | Email | Password |
 | --- | --- | --- |
