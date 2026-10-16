@@ -1,19 +1,50 @@
-# BiliSkwela â€” Version 2
+# BiliSkwela
 
-School Supplies Inventory Management System for INTECH 3112.
+BiliSkwela is a school supplies inventory system for managing products, categories, suppliers, stock movements, user access, and inventory reports.
 
-BiliSkwela converts the supplied **MeronPa** PHP/PDO inventory application to Laravel 13 with React, Inertia 2, Fortify, and Spatie Permission. The previous category/product CRUD, stock-in/out, low-stock alerts, dashboard, history, filters, and printable reports remain. Supplier text is normalized into a related table; each stock movement records its authenticated author.
+## Features
 
-## Requirements
+- Product catalog with search, category and stock filters, product details, and Philippine peso prices
+- Category and supplier records linked to products
+- Stock-in and stock-out records with date, quantity, remarks, and the signed-in user
+- Dashboard with current inventory, low-stock items, and recent stock activity
+- Inventory summary, product inventory, low-stock, and transaction-history reports, with print or Save as PDF
+- Sign-in, registration, password recovery, and profile and password settings
+- Role-based access enforced by the server
 
-- PHP 8.3+ with curl, fileinfo, mbstring, openssl, PDO MySQL/SQLite, and zip; Composer 2.
-- Node 22.12+ (or Node 20.19+) and npm. Node 24 was used for the build.
-- MySQL 8+ or a compatible MariaDB for the classroom setup. SQLite is supported for a quick local demo and automated tests.
-- Do not run this with XAMPP PHP 8.2. Select a compatible PHP executable in your terminal PATH. `php --version` confirms the active version.
+Laravel handles data, validation, and protected routes. Fortify provides account authentication, Spatie Laravel Permission assigns roles and permissions, and Inertia connects the Laravel pages to the React interface.
 
-## Install in VS Code (PowerShell)
+## User access
 
-Extract the source archive. Open the folder containing `artisan`, `composer.json`, and `package.json` in VS Code.
+| Role | Access |
+| --- | --- |
+| Admin | Manage products, categories, suppliers, stock, reports, and user roles |
+| Manager | Manage products, categories, suppliers, stock, and reports |
+| Staff | View products, categories, suppliers, dashboard, and stock history; record stock-out |
+
+New registrations receive the Staff role. Only an Admin can change a user's role. The system prevents removal of the last Admin account.
+
+## Inventory rules
+
+- New products start with zero stock. Record opening quantities as stock-in movements.
+- Product details do not directly change the stock quantity.
+- Stock movements are recorded in the inventory history with the acting user.
+- Stock-out cannot exceed the available quantity. Quantities must be positive whole numbers.
+- Products with stock or movement history cannot be deleted. Categories and suppliers in use by products cannot be deleted.
+- Correct a posted stock movement by recording a new movement with an explanation in the remarks.
+
+## Local setup
+
+### Requirements
+
+- PHP 8.3 or later with curl, fileinfo, mbstring, openssl, PDO MySQL or SQLite, and zip
+- Composer 2
+- Node.js 22.12 or later and npm
+- MySQL 8 or compatible MariaDB; SQLite can be used for a local demonstration
+
+### Install and run
+
+Open the folder containing `artisan`, `composer.json`, and `package.json` in VS Code. Install the application dependencies and create the local environment file:
 
 ```powershell
 composer install
@@ -22,7 +53,7 @@ Copy-Item .env.example .env
 php artisan key:generate
 ```
 
-Create an empty MySQL database named `biliskwela`, then set your own DB_USERNAME and DB_PASSWORD in `.env`. Use a dedicated database rather than the original MeronPa database. Do not overwrite an existing `.env` or commit it.
+Create an empty database named `biliskwela`, then set `DB_USERNAME` and `DB_PASSWORD` in `.env`. Keep `.env` local and do not share it. Initialize the database, add sample data, build the interface, and start the server:
 
 ```powershell
 php artisan migrate --seed
@@ -31,11 +62,9 @@ npm run build
 php artisan serve --host=127.0.0.1 --port=8000
 ```
 
-Open http://127.0.0.1:8000. With built assets, only the PHP server is needed. During frontend development run `npm run dev` in a second terminal. Do not rerun `fortify:install` on this finished project: its customized scaffolding is already included. `composer install` discovers packages automatically.
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in a browser. After the asset build, the PHP server is enough to run the system. While changing the interface, run `npm run dev` in a second terminal.
 
-### Optional quick SQLite demo
-
-Before migrating, change `.env` to `DB_CONNECTION=sqlite`, remove DB_DATABASE or set it to the absolute path of your dedicated file, and create the file:
+For an SQLite demonstration, set `DB_CONNECTION=sqlite` in `.env`, remove `DB_DATABASE` or set it to the full path of a dedicated SQLite file, and create that file before running migrations:
 
 ```powershell
 New-Item -ItemType File database/database.sqlite
@@ -44,60 +73,29 @@ php artisan migrate --seed
 php artisan db:seed --class=DemoSeeder
 ```
 
-SQLite validates the local workflow. Use MySQL for verification of concurrent row locking; SQLite does not implement MySQL's `SELECT ... FOR UPDATE` semantics.
+SQLite is suitable for a local walkthrough. Use MySQL or MariaDB when checking concurrent stock updates.
 
-## Demo accounts (local/testing only)
+## Demo accounts
 
-The fuller demo uses familiar brands available in Philippine shops. To update an existing generic sample catalog without changing quantities, prices, or stock history, run `php artisan db:seed --class=PhilippineBrandsSeeder`. Only unchanged generic names on known sample SKUs are renamed; custom product names are preserved. RealisticDemoSeeder runs this step automatically.
-
-For a fuller school-supply shop demonstration, run `php artisan db:seed --class=RealisticDemoSeeder` after installation. This adds 32 products, five fictional suppliers, and three weeks of sample deliveries and stock-out entries. Sample prices are in PHP and are illustrative. Existing products, stock balances, and accounts are preserved; repeat runs skip products already present. Supplier email addresses use reserved `.test` domains. The sample data is restricted to local/testing environments.
+`DemoSeeder` adds these accounts and sample inventory in local or testing environments only:
 
 | Role | Email | Password |
 | --- | --- | --- |
-| Admin | admin@biliskwela.test | DemoPass123! |
-| Manager | manager@biliskwela.test | DemoPass123! |
-| Staff | staff@biliskwela.test | DemoPass123! |
+| Admin | `admin@biliskwela.test` | `DemoPass123!` |
+| Manager | `manager@biliskwela.test` | `DemoPass123!` |
+| Staff | `staff@biliskwela.test` | `DemoPass123!` |
 
-DemoSeeder is separate from the normal DatabaseSeeder and rejects production environments. It does not reset passwords, role changes, or inventory on later runs. These are public demonstration credentials; never use them for deployed users. The normal seeder creates permissions/roles only. Registration requires those roles to exist and always assigns Staff on the server.
+These shared credentials are for local demonstration only. Do not use them for a deployed system. The sample records are illustrative; product prices are in Philippine pesos and supplier contact details are fictional. The repository is prepared for a local classroom demonstration and is not a deployed service.
 
-## Permissions
+## Using the system
 
-- Admin: all catalog and stock actions, reports, and user role administration.
-- Manager: all catalog and stock actions and reports; cannot change roles.
-- Staff: read categories/products/suppliers/history/dashboard and record stock-out; cannot receive stock, edit/delete catalog, see reports, or assign roles.
-- Routes enforce permissions. React conditional buttons are supplementary. The last Admin cannot be demoted.
+1. Sign in with an account that has the required role.
+2. Add categories and suppliers before creating products that use them.
+3. In Products, add or update a product's SKU, name, category, supplier, price, and minimum stock. Use the search and filters to find records.
+4. In Stock, choose a product and record stock-in or stock-out, quantity, and remarks. Review the transaction in the stock history.
+5. Use the dashboard to check current balances and low-stock items. Open Reports to select an inventory or transaction report, set an optional movement date range for stock activity, and print or save it as a PDF. Inventory reports always show current on-hand balances.
+6. Admins can manage account roles under Users. Each account holder can update their profile and password in Settings.
 
-## Inventory rules
+## Password recovery
 
-New products start at zero stock. Record opening stock through Stock movements. Quantity cannot be written through product CRUD. Every movement updates the cached balance and inserts its ledger entry inside one DB transaction with a product row lock. Insufficient stock, fractional quantities, overflow, and negative/zero quantities are rejected. Posted movements are immutable; corrections are new IN/OUT entries with explanatory remarks. Record the author from the authenticated session, never from client data.
-
-Referenced categories/suppliers and products with stock/history cannot be deleted. Unused zero-stock records support delete for the CRUD demonstration. Category-to-product migration includes the required cascade foreign key, while application checks prevent accidental catalog erasure. Stock/history references use restrictive deletion. There is no archive UI in this version.
-
-## Password recovery and account settings
-
-The local `.env.example` uses `MAIL_MAILER=log`. Request a reset link through Forgot password and inspect `storage/logs/laravel.log` for the generated notification URL. Only inspect your own local test mail. Paste that reset URL into the browser and set a new password. For an actual emailed demonstration, configure your SMTP/mail sandbox credentials in `.env`. Production email needs a real mail service. Settings supports profile updates and password changes with current-password verification.
-
-## Verification
-
-```powershell
-php artisan test
-npm run build
-php vendor/bin/pint --test
-php artisan route:list --except-vendor
-```
-
-Tests use a separate in-memory SQLite database, not your local MySQL data. Laravel disables CSRF middleware during unit/feature tests; verify a missing-token POST through real HTTP as described in `docs/VERIFICATION.md`. See that file for actual performed checks and limitations. Do not present an unperformed MySQL concurrency or production check as passing.
-
-## Six phases and team contributions
-
-See `docs/TEAM_PHASES.md`. One integrated system, one repository; each member owns two phases. A third verification/documentation pull request per member provides nine contributions total. Commit messages are a prospective guide, not a fabricated history. Teammates should understand, adapt, test, and commit their own real work using their own GitHub accounts. Do not push the same complete source as nine unrelated "systems".
-
-## Instructor demonstration
-
-Invite **Eljinx** as repository collaborator. Record a 3-7 minute video showing Fortify auth, role restrictions, CRUD, stock/report features, and code for Fortify, Spatie, and React/Inertia. Submit a readable YouTube/Google Drive video link before the precise Classroom cutoff. The screenshot displays October 16. Check the official Classroom time.
-
-Important code: `bootstrap/app.php`, `resources/views/app.blade.php`, `resources/js/app.jsx`, `vite.config.js`, `app/Providers/FortifyServiceProvider.php`, `app/Actions/Fortify`, `database/seeders/RolesAndPermissionsSeeder.php`, `routes/*.php`, and `app/Services/InventoryService.php`.
-
-## Production configuration
-
-This is a classroom application requiring deployment configuration, not a preconfigured public service. Configure HTTPS, APP_DEBUG=false, a unique application key, trusted host/proxy settings, secure session cookies, real mail, backups, and least-privilege database credentials. Build assets and run migrations against a dedicated production database. Verify version 1 in MySQL and the browser before submission. There are no payments or public storefront checkout flows.
+The local environment writes reset notifications to the Laravel log. To test password recovery, request a reset link on the sign-in page and open the generated link from `storage/logs/laravel.log`. Email delivery requires a mail service configured in `.env`.

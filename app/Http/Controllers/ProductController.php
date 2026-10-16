@@ -93,6 +93,6 @@ class ProductController extends Controller
             return back()->withErrors(['delete' => 'Keep products with stock or history. Only unused zero-stock products can be deleted.']);
         }
 
-        return to_route('products.index')->with('success','Product deleted.');
+        return to_route('products.index')->with('success', 'Product deleted.');
     }
 }
