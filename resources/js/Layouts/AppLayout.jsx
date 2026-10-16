@@ -11,6 +11,7 @@ export default function AppLayout({ title, subtitle, children, action }) {
         ["/categories", "Categories", "categories.view", "◫"],
         ["/suppliers", "Suppliers", "suppliers.view", "◎"],
         ["/stock", "Stock movements", "stock.view", "⇄"],
+        ["/reports", "Reports", "reports.view", "▤"],
         ["/users", "Team access", "users.manage", "♧"],
         ["/settings", "My account", null, "⚙"],
     ];

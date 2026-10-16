@@ -31,7 +31,7 @@ class DemoSeeder extends Seeder
         foreach ($samples as $i => [$group,$name,$price,$quantity]) {
             $category = Category::firstOrCreate(['name' => $group], ['description' => $group.' essentials for school.']);
             $product = Product::firstOrCreate(['sku' => 'BS-'.str_pad((string) ($i + 1), 3, '0', STR_PAD_LEFT)], ['name' => $name, 'category_id' => $category->id, 'supplier_id' => $supplier->id, 'price' => $price, 'minimum_stock' => 5]);
-            if (! $product->stockMovements()->exists() && $product->fresh()->quantity === 0 && $quantity > 0) {
+            if ($product->wasRecentlyCreated && $quantity > 0) {
                 app(InventoryService::class)->record(['product_id' => $product->id, 'type' => 'IN', 'quantity' => $quantity, 'remarks' => 'Opening demo stock'], $admin);
             }
         }
