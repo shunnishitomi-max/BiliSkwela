@@ -2,6 +2,12 @@
 
 BiliSkwela is a school supplies inventory system for managing products, categories, suppliers, stock movements, user access, and inventory reports.
 
+## Team Members
+
+- Shun Aei Dg. Nishitomi
+- Mariz Angiella Liu
+- Alberto Carlos Castaneda
+
 ## Features
 
 - Product catalog with search, category and stock filters, product details, and Philippine peso prices
