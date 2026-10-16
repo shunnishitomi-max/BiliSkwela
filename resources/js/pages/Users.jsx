@@ -48,7 +48,7 @@ export default function Users({ users, filters = {} }) {
     return (
         <AppLayout
             title="Team access"
-            subtitle="The right tools for the right people."
+            subtitle="Manage staff roles and access to shop records."
         >
             <section className="card">
                 <p className="hint">

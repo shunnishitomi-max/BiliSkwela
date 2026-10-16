@@ -5,7 +5,7 @@ export default function Login({ status }) {
     const f = useForm({ email: "", password: "", remember: false });
     return (
         <AuthLayout title="Welcome back">
-            <p className="subtitle">Sign in to your inventory workspace.</p>
+            <p className="subtitle">Use your shop account to sign in.</p>
             {status && <div className="notice success">{status}</div>}
             <form
                 onSubmit={(e) => {

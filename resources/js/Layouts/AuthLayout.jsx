@@ -1,37 +1,45 @@
 import { Head, Link } from "@inertiajs/react";
+
 export default function AuthLayout({ title, children }) {
     return (
         <div className="auth-shell">
             <Head title={title} />
             <section className="auth-art">
                 <span className="brand light">
-                    <span className="brand-icon">B</span>BiliSkwela
+                    <span className="brand-icon">bs.</span>
+                    <span>
+                        BiliSkwela<small>School supplies</small>
+                    </span>
                 </span>
-                <div>
-                    <p className="eyebrow">LESS GUESSING. MORE LEARNING.</p>
+                <div className="auth-shop-sign">
+                    <span className="shop-sign-label">
+                        ANG GAMIT SA ESKWELA
+                    </span>
                     <h1>
-                        May gamit.
+                        Bili na.
                         <br />
-                        May galing.
+                        May pasok pa.
                     </h1>
                     <p>
-                        Keep every pencil, page, and possibility accounted for.
+                        Notebooks, paper, pens, and the everyday things students
+                        need.
                     </p>
-                    <div className="supply-shapes">
-                        <span>✎</span>
-                        <span>▤</span>
-                        <span>✦</span>
+                    <div className="shop-lines">
+                        <span>NOTEBOOKS</span>
+                        <span>WRITING TOOLS</span>
+                        <span>PAPER & MORE</span>
                     </div>
                 </div>
-                <small>Lahat ng gamit, ready sa eskwela.</small>
+                <small>Shop inventory & stock records</small>
             </section>
             <section className="auth-form">
                 <div className="auth-card">
                     <Link href="/login" className="auth-logo">
-                        BiliSkwela ✦
+                        BiliSkwela <span>/ Staff access</span>
                     </Link>
                     <h2>{title}</h2>
                     {children}
+                    <p className="auth-footnote">For authorized shop staff.</p>
                 </div>
             </section>
         </div>

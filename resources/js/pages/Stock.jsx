@@ -19,14 +19,14 @@ export default function Stock({ movements, products, filters = {} }) {
     return (
         <AppLayout
             title="Stock movements"
-            subtitle="Every item in. Every item out. A clear trail."
+            subtitle="Record deliveries and issued supplies. View the stock ledger below."
         >
             {(can("stock.in") || can("stock.out")) && (
                 <section className="card">
                     <div className="section-heading">
                         <h2>Record a movement</h2>
                         <span className="badge green">
-                            Stock history stays intact
+                            Entries cannot be edited
                         </span>
                     </div>
                     <form

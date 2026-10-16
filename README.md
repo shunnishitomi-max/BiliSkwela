@@ -1,4 +1,4 @@
-# BiliSkwela — Version 1
+# BiliSkwela — Version 2
 
 School Supplies Inventory Management System for INTECH 3112.
 
