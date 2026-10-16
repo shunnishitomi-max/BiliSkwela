@@ -1,27 +1,32 @@
-# Phase 5 source changes - no code comments
+# Phase 6 source changes - no code comments
 
-Compared with the no-comments Phase 4 checkpoint.
+Compared with the no-comments Phase 5 checkpoint.
 
 ## ADDED
 
-- `app/Http/Controllers/UserRoleController.php`
-- `resources/js/pages/Users.jsx`
-- `routes/users.php`
+- `app/Http/Controllers/DashboardController.php`
+- `app/Http/Controllers/ReportController.php`
+- `docs/DEMO_SCRIPT.md`
+- `docs/VERIFICATION.md`
+- `resources/js/pages/Dashboard.jsx`
+- `resources/js/pages/Reports.jsx`
+- `routes/reports.php`
+- `tests/Feature/AuthenticationTest.php`
+- `tests/Feature/AuthorizationTest.php`
+- `tests/Feature/CatalogTest.php`
+- `tests/Feature/IntegrationTest.php`
+- `tests/Feature/StockTest.php`
+- `tests/InventoryTestCase.php`
 
 ## MODIFIED
 
 - `README.md`
-- `app/Http/Controllers/StockMovementController.php`
-- `app/Http/Middleware/HandleInertiaRequests.php`
-- `database/seeders/RolesAndPermissionsSeeder.php`
+- `database/seeders/DemoSeeder.php`
 - `resources/js/Layouts/AppLayout.jsx`
-- `routes/categories.php`
-- `routes/products.php`
-- `routes/stock.php`
-- `routes/suppliers.php`
 - `routes/web.php`
 
 ## REMOVED
 
-None.
+- `resources/js/pages/PhaseHome.jsx`
+- `tests/Feature/.gitignore`
 
