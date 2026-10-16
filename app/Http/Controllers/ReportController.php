@@ -17,7 +17,7 @@ class ReportController extends Controller
         return Inertia::render('Reports', [
             'totals' => ['in' => (int) (clone $query)->where('type', 'IN')->sum('quantity'), 'out' => (int) (clone $query)->where('type', 'OUT')->sum('quantity'), 'units' => (int) Product::sum('quantity')],
             'products' => Product::with(['category', 'supplier'])->orderBy('name')->get(),
-            'movements' => (clone $query)->with(['product', 'user'])->latest('id')->paginate(20)->withQueryString(),
+            'movements' => (clone $query)->with(['product', 'user'])->latest()->latest('id')->paginate(20)->withQueryString(),
             'filters' => $filters, 'generatedAt' => now()->toIso8601String(),
         ]);
     }
